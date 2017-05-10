@@ -1,0 +1,2 @@
+GET        /                        controllers.QueryTimeoutController.stream
+GET        /add                     controllers.QueryTimeoutController.add
