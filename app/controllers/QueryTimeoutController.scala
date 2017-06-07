@@ -4,8 +4,6 @@ import javax.inject.{Inject, Singleton}
 
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-import akka.stream.alpakka.elasticsearch.scaladsl.ElasticsearchSink
-import akka.stream.alpakka.elasticsearch.{ElasticsearchSinkSettings, IncomingMessage}
 import akka.stream.scaladsl.Source
 import model.TestData
 import org.apache.http.HttpHost
@@ -14,6 +12,7 @@ import play.api.db.slick.DatabaseConfigProvider
 import play.api.mvc._
 import slick.driver.JdbcProfile
 import spray.json.{JsObject, JsString}
+import stream.{ElasticsearchSink, ElasticsearchSinkSettings, IncomingMessage}
 
 import scala.concurrent.ExecutionContext
 import scala.util.Random
@@ -36,7 +35,8 @@ class QueryTimeoutController @Inject()(dbConfigProvider: DatabaseConfigProvider,
     ).map(x => IncomingMessage(None, new JsObject(Map("id" -> new JsString(x.toString))))).runWith(ElasticsearchSink(
       "postgres",
       "test_data",
-      ElasticsearchSinkSettings(10000)
+      ElasticsearchSinkSettings(10000),
+      parallelism = 1
     ))
 
     f.map(_ => Ok((System.currentTimeMillis() - start).toString))
