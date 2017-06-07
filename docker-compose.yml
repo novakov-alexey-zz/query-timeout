@@ -1,0 +1,12 @@
+version: '3'
+services:
+  query-timeout:
+    build: .
+    ports:
+      - "9000:9000"
+    links:
+      - postgres
+    environment:
+      - APPLICATION_SECRET
+  postgres:
+    image: postgres
