@@ -11,6 +11,7 @@ lazy val `query-timeout` = (project in file("."))
       "com.typesafe.play" %% "play-slick-evolutions" % playSlickV,
       "org.postgresql" % "postgresql" % "42.1.1",
       "com.h2database" % "h2" % "1.4.195",
+      "com.lightbend.akka" %% "akka-stream-alpakka-elasticsearch" % "0.6+109-a8f1e52b",
 
       "org.scalatest" %% "scalatest" % "3.0.3" % Test,
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0-RC1" % Test,
